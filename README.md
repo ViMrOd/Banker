@@ -1,1 +1,13 @@
 # Banker
+
+This is an implemntation of the bankers algorithm in C. The program reads from a text file with three matricies. The first matrix is the how hany resources are allocated to that process, the second matrix is the maximum number of resources the process will request, and the third matrix are how many of each resource are availiable. For the first two matricies, the number of rows are how many processes  while the number of columns are the number of resources. So for example allocate[m][n] means process m is requested some amount of resource n. The program then applies the Banker's Algorithm to determine whether the system is in a safe state and if it is in a safe state it finds the safe sequence of processes. 
+
+The text file starts with the dimensions of the allocation matrix follwed by the matrix. Then the dimensions of the maximum matrix followed by the maximum matrix. Then since the availiable matrix has 1 row, it is just an array so only the number of columns is nedded. The program then opens the text file as a file pointer and using the fscanf() function, is able to read in from the text file and input the information into the appropriate array. Allocation is put into alloc[][] array with is multidimensional. Maximum is put into the max[][] array which is also multidimensional. Availiable is put into the avail[] array which is one dimensional. The program then finds the need[][] array which is max[][] - alloc[][].
+
+Now the program is able to run the Banker's Algorithm. First the number of processes is n while the number of resources is m. This sets a work array equal to avail[] and a finish array of length n with only holds false values. Next the program will search for an i so that finish[i] is false and need[i][j] <= avail[j]. If no i exists with these two conditions, then the program will search through finish to see if all the values are true. If all the values of finish are true, the program is in a safe state. If not the program is not in a safe state. However if such an i does exist, then work is set avail[y] = alloc[i][y] + avail[y]. Finish[i] is also set to true. The program then goes back to searching for finish[i] = false and need[i][j] <= avail[j].
+
+If the system is in a safe state, it then needs to safe request order. If need[i][j] <= avail[j], the process can run and is added to the ans[] queue. Then avail[y] += alloc[i][j].
+
+If the system is in a safe state, then the system is printed from the ans array. 
+
+To run the program, clone the repository and compile with gcc banker.c -o banker. Then run ./banker with the state .txt in the same directory.
